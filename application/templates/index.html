@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Welcome</title>
+</head>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FFXLFS375Q"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag("js", new Date());
+
+  gtag("config", "{{ property_id }}");
+</script>
+
+<body>
+    <h1>Welcome to my website!</h1>
+</body>
+<script>
+  function sendOfflineEvent(clientID) {
+    // Send clientID to server
+    console.log(clientID);
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("POST", "/", true);
+    xhttp.setRequestHeader("Content-type", "application/json");
+    xhttp.send(JSON.stringify({"client_id": clientID}));
+  }
+
+  // Take gtag client id and send it to the server
+  gtag("get", "{{ property_id }}", "client_id", (clientID) => {
+    sendOfflineEvent(clientID);
+  });
+  setInterval(function() {
+    gtag("get", "{{ property_id }}", "client_id", (clientID) => {
+      sendOfflineEvent(clientID);
+    });
+  }, 30000);
+</script>
+</html>
