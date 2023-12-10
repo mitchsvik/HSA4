@@ -1,0 +1,16 @@
+version: '3.9'
+services:
+  web:
+    container_name: hsa5_web
+    build: ./application
+    working_dir: /application
+    environment:
+      - FLASK_DEBUG=1
+      - GA_PROPERTY_ID=${GA_PROPERTY_ID}
+      - GA_MEASUREMENT_SECRET=${GA_MEASUREMENT_SECRET}
+    volumes:
+      - ./application:/application:rw
+    ports:
+      - 5000:5000
+    restart: always
+    command: flask run
